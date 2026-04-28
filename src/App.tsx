@@ -4,6 +4,7 @@ import { AppRouter } from "./router/AppRouter.tsx";
 import { ThemeProvider } from "styled-components";
 import { DarkTheme, LightTheme } from "./styles/theme.ts";
 import { useEffect, useState } from "react";
+import { ThemeContext } from "./contexts/theme/ThemeContext.tsx";
 
 function App() {
     // 초기값 자리에 함수를 집어넣을 수도 있음.
@@ -21,14 +22,17 @@ function App() {
     const onClick = () => {
         // setState에도 매개변수로 함수를 작성해줄 수 있는데,
         // 이 때 함수의 매개변수 자리에는 "지금 현재 state 값"이 들어옴
-        setTheme(prev => prev === "dark" ? "light" : "dark");
+        setTheme(prev => (prev === "dark" ? "light" : "dark"));
     };
 
+    // 2. Context 제공자로 묶어주기
     return (
-        <ThemeProvider theme={theme === "light" ? LightTheme : DarkTheme}>
-            <GlobalStyle />
-            <RouterProvider router={AppRouter(onClick)} />
-        </ThemeProvider>
+        <ThemeContext.Provider value={{ theme, toggleTheme: onClick }}>
+            <ThemeProvider theme={theme === "light" ? LightTheme : DarkTheme}>
+                <GlobalStyle />
+                <RouterProvider router={AppRouter()} />
+            </ThemeProvider>
+        </ThemeContext.Provider>
     );
 }
 
