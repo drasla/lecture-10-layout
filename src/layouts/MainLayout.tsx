@@ -15,10 +15,13 @@ const Main = styled.main`
     flex: 1;
 `;
 
-function MainLayout() {
+
+// MainLayout은 컴포넌트 O
+// 얘는 Props로 전달받음
+function MainLayout({ onClick }: { onClick: VoidFunction }) {
     return (
         <Wrap>
-            <Header />
+            <Header onClick={onClick} />
             <Main>
                 <Outlet />
             </Main>

@@ -1,6 +1,5 @@
 import styled from "styled-components";
 import { Link } from "react-router";
-import { useState } from "react";
 
 const Head = styled.header`
     height: 64px;
@@ -32,9 +31,7 @@ const NavRight = styled.div`
     align-items: center;
 `;
 
-function Header() {
-    const [theme, setTheme] = useState<"light" | "dark">("light"); // 테마 상태를 저장하는 state
-
+function Header({ onClick }: { onClick: VoidFunction }) {
     return (
         <Head>
             <NavLeft>
@@ -46,14 +43,7 @@ function Header() {
             </NavLeft>
             <NavRight>
                 <Link to={"/auth/login"}>로그인</Link>
-                <button
-                    onClick={() => {
-                        if (theme === "light") {
-                            setTheme("dark");
-                        } else {
-                            setTheme("light");
-                        }
-                    }}>
+                <button onClick={onClick}>
                     테마토글
                 </button>
             </NavRight>
